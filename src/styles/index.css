@@ -1,0 +1,337 @@
+@import "tailwindcss";
+
+/* ─── LIGHT THEME (default) ─────────────────────────────── */
+:root,
+html.light {
+  --nav-height: 68px;
+  --bg-primary:       #f8fafc;
+  --bg-secondary:     #f1f5f9;
+  --bg-card:          rgba(255, 255, 255, 0.85);
+  --bg-nav:           rgba(248, 250, 252, 0.9);
+  --accent-cyan:      #0284c7;
+  --accent-purple:    #7c3aed;
+  --accent-green:     #059669;
+  --accent-orange:    #d97706;
+  --text-primary:     #0f172a;
+  --text-secondary:   #334155;
+  --text-muted:       #64748b;
+  --border-subtle:    rgba(0, 0, 0, 0.08);
+  --border-card:      rgba(0, 0, 0, 0.1);
+  --glow-cyan:        0 0 20px rgba(2, 132, 199, 0.2);
+  --glow-purple:      0 0 20px rgba(124, 58, 237, 0.2);
+  --shadow-card:      0 4px 24px rgba(0, 0, 0, 0.08);
+  --hero-overlay:     linear-gradient(90deg, rgba(248,250,252,0.92) 0%, rgba(248,250,252,0.6) 60%, rgba(248,250,252,0.1) 100%);
+  --scrollbar-track:  #e2e8f0;
+  --noise-opacity:    0.02;
+}
+
+/* ─── DARK THEME ─────────────────────────────────────────── */
+html.dark {
+  --bg-primary:       #030308;
+  --bg-secondary:     #08080f;
+  --bg-card:          rgba(255, 255, 255, 0.03);
+  --bg-nav:           rgba(3, 3, 8, 0.85);
+  --accent-cyan:      #00e5ff;
+  --accent-purple:    #8b5cf6;
+  --accent-green:     #10b981;
+  --accent-orange:    #f59e0b;
+  --text-primary:     #f1f5f9;
+  --text-secondary:   #94a3b8;
+  --text-muted:       #475569;
+  --border-subtle:    rgba(255, 255, 255, 0.07);
+  --border-card:      rgba(255, 255, 255, 0.07);
+  --glow-cyan:        0 0 20px rgba(0, 229, 255, 0.3);
+  --glow-purple:      0 0 20px rgba(139, 92, 246, 0.3);
+  --shadow-card:      0 4px 24px rgba(0, 0, 0, 0.4);
+  --hero-overlay:     linear-gradient(90deg, rgba(3,3,8,0.85) 0%, rgba(3,3,8,0.4) 60%, rgba(3,3,8,0.1) 100%);
+  --scrollbar-track:  #030308;
+  --noise-opacity:    0.035;
+}
+
+/* ─── GLOBAL RESET ───────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+/* Smooth theme transition on everything */
+body,
+body * {
+  transition:
+    background-color 0.4s ease,
+    border-color 0.4s ease,
+    color 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+/* But NOT on transforms/opacity (would break animations) */
+body *[style*="transform"],
+body *[style*="opacity"] {
+  transition:
+    background-color 0.4s ease,
+    border-color 0.4s ease,
+    color 0.4s ease,
+    box-shadow 0.4s ease,
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+@media (hover: none) {
+  body { cursor: auto; }
+}
+
+/* ─── CUSTOM CURSOR ──────────────────────────────────────── */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 99999;
+  border-radius: 50%;
+  transition: width 0.2s ease, height 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+}
+
+.cursor-dot {
+  width: 6px; height: 6px;
+  background: var(--accent-cyan);
+  box-shadow: 0 0 10px var(--accent-cyan);
+}
+
+.cursor-ring {
+  width: 40px; height: 40px;
+  border: 1.5px solid var(--accent-cyan);
+  opacity: 0.6;
+}
+
+.cursor-ring.hovered {
+  width: 60px; height: 60px;
+  background: rgba(2, 132, 199, 0.06);
+  opacity: 0.9;
+}
+
+html.dark .cursor-ring.hovered {
+  background: rgba(0, 229, 255, 0.05);
+}
+
+@media (hover: none) {
+  .cursor-dot, .cursor-ring { display: none; }
+}
+
+/* ─── NOISE OVERLAY ──────────────────────────────────────── */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  pointer-events: none;
+  opacity: var(--noise-opacity);
+  background-image: url('/noise.png');
+  background-size: 200px 200px;
+}
+
+/* ─── SECTION BASE ───────────────────────────────────────── */
+section { position: relative; }
+
+/* ─── GLASS CARD ─────────────────────────────────────────── */
+.glass-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  box-shadow: var(--shadow-card);
+}
+
+/* ─── GRADIENT TEXT ──────────────────────────────────────── */
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── SECTION LABEL ──────────────────────────────────────── */
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+  color: var(--accent-cyan);
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+/* ─── SKILL PILL ─────────────────────────────────────────── */
+.skill-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(2, 132, 199, 0.07);
+  border: 1px solid rgba(2, 132, 199, 0.25);
+  color: var(--accent-cyan);
+  transition: all 0.2s ease;
+}
+
+html.dark .skill-pill {
+  background: rgba(0, 229, 255, 0.05);
+  border-color: rgba(0, 229, 255, 0.2);
+}
+
+.skill-pill:hover {
+  background: rgba(2, 132, 199, 0.14);
+  border-color: var(--accent-cyan);
+  box-shadow: var(--glow-cyan);
+}
+
+html.dark .skill-pill:hover {
+  background: rgba(0, 229, 255, 0.12);
+}
+
+/* ─── THEME-AWARE HELPERS ────────────────────────────────── */
+
+/* Progress bar track */
+.progress-track {
+  height: 4px;
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+html.dark .progress-track {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Card number watermark */
+.card-number-watermark {
+  color: rgba(0, 0, 0, 0.05);
+}
+
+html.dark .card-number-watermark {
+  color: rgba(255, 255, 255, 0.04);
+}
+
+/* Card tag (neutral) */
+.card-tag-neutral {
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: var(--text-secondary);
+}
+
+html.dark .card-tag-neutral {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--border-card);
+  color: var(--text-secondary);
+}
+
+/* Social icon button (neutral) */
+.social-icon-btn {
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: var(--text-muted);
+}
+
+html.dark .social-icon-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Timeline dot border */
+.timeline-dot {
+  border: 2px solid var(--bg-secondary);
+}
+
+/* About floating tag */
+.about-floating-tag {
+  background: rgba(248, 250, 252, 0.95);
+  border: 1px solid rgba(2, 132, 199, 0.3);
+  color: var(--accent-cyan);
+}
+
+html.dark .about-floating-tag {
+  background: rgba(3, 3, 8, 0.92);
+  border-color: rgba(0, 229, 255, 0.3);
+  color: #00e5ff;
+}
+
+/* ─── SCROLLBAR ──────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+::-webkit-scrollbar-thumb { background: var(--accent-cyan); border-radius: 2px; }
+
+/* ─── SELECTION ──────────────────────────────────────────── */
+::selection {
+  background: rgba(2, 132, 199, 0.2);
+  color: var(--text-primary);
+}
+
+html.dark ::selection {
+  background: rgba(0, 229, 255, 0.2);
+}
+
+/* ─── THEME TOGGLE BUTTON ────────────────────────────────── */
+.theme-toggle {
+  position: relative;
+  width: 52px;
+  height: 28px;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  background: transparent;
+  flex-shrink: 0;
+}
+
+.theme-toggle-track {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: #e2e8f0;
+  border: 1.5px solid #cbd5e1;
+  transition: background 0.4s ease, border-color 0.4s ease;
+}
+
+html.dark .theme-toggle-track {
+  background: rgba(0, 229, 255, 0.15);
+  border-color: rgba(0, 229, 255, 0.4);
+}
+
+.theme-toggle-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #0284c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.4s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+html.dark .theme-toggle-thumb {
+  transform: translateX(24px);
+  background: #00e5ff;
+}
+
+/* ─── FONT HELPERS ───────────────────────────────────────── */
+.font-syne   { font-family: 'Syne', sans-serif; }
+.font-space  { font-family: 'Space Grotesk', sans-serif; }
+.font-jakarta{ font-family: 'Plus Jakarta Sans', sans-serif; }
+.font-mono   { font-family: 'JetBrains Mono', monospace; }
