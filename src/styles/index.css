@@ -360,7 +360,14 @@ html.dark .theme-toggle-thumb {
 
 /* ─── MOBILE SECTION PADDING ────────────────────────────── */
 @media (max-width: 640px) {
-  section {
+  #about,
+  #skills,
+  #projects,
+  #services,
+  #timeline,
+  #certifications,
+  #highlights,
+  #contact {
     padding-top: 3rem !important;
     padding-bottom: 3rem !important;
   }

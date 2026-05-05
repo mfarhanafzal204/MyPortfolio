@@ -296,7 +296,7 @@ function ProjectCard({ project, isDark }) {
       </div>
 
       {/* Video player modal */}
-      {showVideo && project.videoPath && (
+      {showVideo && (project.videoPath || project.youtubeId) && (
         <div
           style={{
             position: 'fixed',
