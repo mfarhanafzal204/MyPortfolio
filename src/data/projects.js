@@ -115,7 +115,7 @@ export const projects = [
     tags: ['Video Editing', 'Motion Graphics', 'Marketing', 'Brand Content'],
     liveUrl: null,
     videoPath: null,
-    youtubeId: 'youtube.com/watch?v=_SgZkrgI2BM&feature=youtu.be',
+    youtubeId: '_SgZkrgI2BM',
     githubUrl: null,
     color: '#f97316',
     period: '2025',
