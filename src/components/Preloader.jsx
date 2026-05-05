@@ -60,20 +60,7 @@ export default function Preloader({ onComplete }) {
   return (
     <div
       ref={containerRef}
-      style={{
-        position: 'fixed',
-        inset: 0,
-        zIndex: 99999,
-        background: 'var(--bg-primary)',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-        height: '100%',
-        minHeight: '-webkit-fill-available',
-        overflow: 'hidden',
-      }}
+      className="preloader-container"
     >
       {/* Name letters */}
       <div style={{ display: 'flex', gap: '4px', marginBottom: '2rem' }}>
