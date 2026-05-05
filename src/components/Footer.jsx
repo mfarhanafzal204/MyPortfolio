@@ -1,4 +1,4 @@
-import { FaGithub, FaLinkedin, FaStar } from 'react-icons/fa';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
 
 const navLinks = [
   { label: 'About', href: '#about' },
@@ -8,10 +8,17 @@ const navLinks = [
   { label: 'Contact', href: '#contact' },
 ];
 
+const FiverrIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+    <circle cx="18.5" cy="5.5" r="1.5"/>
+    <path d="M5.5 18V9.5H4V7.5h1.5V7c0-2.2 1.3-3.5 3.5-3.5.6 0 1.1.1 1.5.2v2c-.3-.1-.6-.2-1-.2-.9 0-1.5.5-1.5 1.5v.5H11v2H8v8.5H5.5zM12 18V9.5h2.5V18H12z"/>
+  </svg>
+);
+
 const socialLinks = [
   { icon: FaGithub, href: 'https://github.com/farhan-afzal', label: 'GitHub' },
   { icon: FaLinkedin, href: 'https://www.linkedin.com/in/farhan-afzal-85518b282/', label: 'LinkedIn' },
-  { icon: FaStar, href: 'https://www.fiverr.com/farhan_afzal204?public_mode=true', label: 'Fiverr' },
+  { icon: FiverrIcon, href: 'https://www.fiverr.com/farhan_afzal204?public_mode=true', label: 'Fiverr' },
 ];
 
 export default function Footer() {

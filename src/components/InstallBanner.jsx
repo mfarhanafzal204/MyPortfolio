@@ -10,23 +10,37 @@ export default function InstallBanner() {
   const timerRef                  = useRef(null);
 
   useEffect(() => {
-    // Don't show if already dismissed this session
     if (sessionStorage.getItem('pwa-banner-dismissed')) return;
 
     const handler = (e) => {
       e.preventDefault();
       deferredPrompt.current = e;
-      // Show banner after 4s (after preloader finishes)
       setTimeout(() => {
         setShow(true);
         setTimeout(() => setVisible(true), 50);
-        // Auto-dismiss after 8s
         timerRef.current = setTimeout(() => dismiss(), 8000);
       }, 4000);
     };
 
     window.addEventListener('beforeinstallprompt', handler);
-    return () => window.removeEventListener('beforeinstallprompt', handler);
+
+    // Fallback for iOS / browsers that don't support beforeinstallprompt
+    const fallbackTimer = setTimeout(() => {
+      if (!deferredPrompt.current && !sessionStorage.getItem('pwa-banner-dismissed')) {
+        const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+        if (!isStandalone && (isIOS || /android/i.test(navigator.userAgent))) {
+          setShow(true);
+          setTimeout(() => setVisible(true), 50);
+          timerRef.current = setTimeout(() => dismiss(), 8000);
+        }
+      }
+    }, 5000);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handler);
+      clearTimeout(fallbackTimer);
+    };
   }, []);
 
   const dismiss = () => {
@@ -37,10 +51,11 @@ export default function InstallBanner() {
   };
 
   const install = async () => {
-    if (!deferredPrompt.current) return;
-    deferredPrompt.current.prompt();
-    const { outcome } = await deferredPrompt.current.userChoice;
-    deferredPrompt.current = null;
+    if (deferredPrompt.current) {
+      deferredPrompt.current.prompt();
+      const { outcome } = await deferredPrompt.current.userChoice;
+      deferredPrompt.current = null;
+    }
     dismiss();
   };
 
@@ -159,7 +174,7 @@ export default function InstallBanner() {
             <polyline points="7 10 12 15 17 10"/>
             <line x1="12" y1="15" x2="12" y2="3"/>
           </svg>
-          Install
+          Install App
         </button>
 
         {/* Dismiss X */}

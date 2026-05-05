@@ -342,7 +342,7 @@ export default function Timeline() {
           {timeline.map((item, i) => (
             <div key={i} style={{ position: 'relative' }}>
               {/* Dot */}
-              <div style={{
+              <div className="tl-dot" style={{
                 position: 'absolute',
                 left: '50%',
                 top: '1.6rem',
@@ -363,13 +363,17 @@ export default function Timeline() {
         /* Mobile: stack all cards left */
         @media (max-width: 767px) {
           .tl-row {
-            padding-left: 2rem !important;
+            padding-left: 2.5rem !important;
             padding-right: 0 !important;
             justify-content: flex-start !important;
           }
           .tl-line-track {
-            left: 0 !important;
+            left: 0.6rem !important;
             transform: none !important;
+          }
+          .tl-dot {
+            left: 0.6rem !important;
+            transform: translateX(-50%) !important;
           }
         }
       `}</style>

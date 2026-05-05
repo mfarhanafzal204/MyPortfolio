@@ -65,7 +65,7 @@ function StatItem({ value, suffix, label, isDark }) {
       <div style={{
         fontFamily: "'Syne', sans-serif",
         fontWeight: 800,
-        fontSize: 'clamp(1.6rem, 3vw, 2.25rem)',
+        fontSize: 'clamp(1.8rem, 3.5vw, 2.5rem)',
         background: 'linear-gradient(135deg, var(--accent-cyan) 20%, var(--accent-purple) 100%)',
         WebkitBackgroundClip: 'text',
         WebkitTextFillColor: 'transparent',
@@ -77,10 +77,10 @@ function StatItem({ value, suffix, label, isDark }) {
       </div>
       <div style={{
         fontFamily: "'Plus Jakarta Sans', sans-serif",
-        fontSize: 'clamp(0.72rem, 1.1vw, 0.82rem)',
-        color: 'var(--text-muted)',
-        fontWeight: 500,
-        letterSpacing: '0.02em',
+        fontSize: 'clamp(0.8rem, 1.3vw, 0.9rem)',
+        color: 'var(--text-secondary)',
+        fontWeight: 600,
+        letterSpacing: '0.01em',
         lineHeight: 1.3,
         marginTop: '0.1rem',
       }}>

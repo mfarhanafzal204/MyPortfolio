@@ -235,7 +235,7 @@ export default function Navbar() {
         onClick={() => setMenuOpen(false)}
         style={{
           display: menuOpen ? 'block' : 'none',
-          position: 'fixed', inset: 0, zIndex: 998,
+          position: 'fixed', inset: 0, zIndex: 1000,
           background: 'rgba(0,0,0,0.5)',
           backdropFilter: 'blur(4px)',
         }}
@@ -246,9 +246,9 @@ export default function Navbar() {
         ref={menuRef}
         style={{
           display: 'none',
-          position: 'fixed', top: 0, right: 0, bottom: 0,
+          position: 'fixed', top: '68px', right: 0, bottom: 0,
           width: 'min(320px, 88vw)',
-          zIndex: 999,
+          zIndex: 1001,
           background: isDark
             ? 'linear-gradient(160deg, rgba(8,8,20,0.98) 0%, rgba(3,3,12,0.99) 100%)'
             : 'linear-gradient(160deg, rgba(255,255,255,0.99) 0%, rgba(245,247,252,0.99) 100%)',

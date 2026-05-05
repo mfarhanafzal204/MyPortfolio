@@ -114,7 +114,7 @@ export const projects = [
     impact: 'Professional brand storytelling',
     tags: ['Video Editing', 'Motion Graphics', 'Marketing', 'Brand Content'],
     liveUrl: null,
-    videoPath: '/images/Arcture Technologies.mp4',
+    videoPath: 'https://res.cloudinary.com/YOUR_CLOUD_NAME/video/upload/Arcture_Technologies.mp4',
     githubUrl: null,
     color: '#f97316',
     period: '2025',
