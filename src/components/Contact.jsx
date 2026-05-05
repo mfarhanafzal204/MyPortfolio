@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import emailjs from '@emailjs/browser';
 import { gsap } from '../utils/gsapConfig';
 import { useTheme } from '../context/ThemeContext';
 
@@ -149,7 +148,13 @@ export default function Contact() {
     e.preventDefault();
     setStatus('sending');
     try {
-      await emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', formRef.current, 'YOUR_PUBLIC_KEY');
+      const formEl = formRef.current;
+      const data = new FormData(formEl);
+      await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(data).toString(),
+      });
       setStatus('success');
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch {
@@ -344,7 +349,19 @@ export default function Contact() {
                 </p>
               </div>
 
-              <form ref={formRef} onSubmit={handleSubmit}>
+              <form
+                ref={formRef}
+                name="contact"
+                method="POST"
+                data-netlify="true"
+                data-netlify-honeypot="bot-field"
+                onSubmit={handleSubmit}
+              >
+                {/* Required hidden fields for Netlify */}
+                <input type="hidden" name="form-name" value="contact" />
+                <p style={{ display: 'none' }}>
+                  <label>Don't fill this out: <input name="bot-field" /></label>
+                </p>
                 {/* Name + Email row */}
                 <div className="form-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
                   <InputField label="Full Name" name="name" placeholder="Your name" value={formData.name} onChange={handleChange} isDark={isDark} />
