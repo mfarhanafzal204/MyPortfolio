@@ -1,34 +1,27 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from '../utils/gsapConfig';
 
-const NAME_CHARS = 'FARHAN AFZAL'.split('');
-
 export default function Preloader({ onComplete }) {
-  const containerRef = useRef();
-  const charsRef = useRef([]);
+  const containerRef   = useRef();
+  const nameRef        = useRef();
   const progressBarRef = useRef();
-  const counterRef = useRef();
+  const counterRef     = useRef();
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    // Lock scroll during preloader
     document.body.style.overflow = 'hidden';
 
     const tl = gsap.timeline();
 
-    tl.set(charsRef.current, { y: 40, opacity: 0 })
-      .to(charsRef.current, {
-        y: 0,
-        opacity: 1,
-        stagger: 0.07,
-        ease: 'power3.out',
-        duration: 0.45,
-      })
-      .to(progressBarRef.current, {
-        width: '100%',
-        duration: 1.4,
-        ease: 'power2.inOut',
-      }, '-=0.2');
+    tl.fromTo(nameRef.current,
+      { y: 30, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out' }
+    )
+    .to(progressBarRef.current, {
+      width: '100%',
+      duration: 1.4,
+      ease: 'power2.inOut',
+    }, '-=0.2');
 
     // Counter
     const counterTween = { val: 0 };
@@ -58,41 +51,46 @@ export default function Preloader({ onComplete }) {
   }, [onComplete]);
 
   return (
-    <div
-      ref={containerRef}
-      className="preloader-container"
-    >
-      {/* Name letters */}
-      <div style={{ display: 'flex', gap: '4px', marginBottom: '2rem' }}>
-        {NAME_CHARS.map((char, i) => (
-          <span
-            key={i}
-            ref={(el) => (charsRef.current[i] = el)}
-            style={{
-              fontFamily: "'Syne', sans-serif",
-              fontWeight: 800,
-              fontSize: 'clamp(2rem, 6vw, 4rem)',
-              color: char === ' ' ? 'transparent' : 'var(--text-primary)',
-              letterSpacing: '0.05em',
-              display: 'inline-block',
-              minWidth: char === ' ' ? '1rem' : 'auto',
-            }}
-          >
-            {char === ' ' ? '\u00A0' : char}
-          </span>
-        ))}
+    <div ref={containerRef} className="preloader-container">
+
+      {/* Name — responsive */}
+      <div ref={nameRef} style={{ textAlign: 'center', marginBottom: '2rem', opacity: 0 }}>
+        <div style={{
+          fontFamily: "'Syne', sans-serif",
+          fontWeight: 800,
+          fontSize: 'clamp(2rem, 10vw, 5rem)',
+          color: 'var(--text-primary)',
+          letterSpacing: '0.08em',
+          lineHeight: 1.1,
+          whiteSpace: 'nowrap',
+        }}>
+          FARHAN
+        </div>
+        <div style={{
+          fontFamily: "'Syne', sans-serif",
+          fontWeight: 800,
+          fontSize: 'clamp(2rem, 10vw, 5rem)',
+          color: 'var(--text-primary)',
+          letterSpacing: '0.08em',
+          lineHeight: 1.1,
+          whiteSpace: 'nowrap',
+          background: 'linear-gradient(135deg, #00e5ff, #8b5cf6)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text',
+        }}>
+          AFZAL
+        </div>
       </div>
 
       {/* Progress bar */}
-      <div
-        style={{
-          width: '240px',
-          height: '2px',
-          background: 'rgba(255,255,255,0.08)',
-          borderRadius: '2px',
-          overflow: 'hidden',
-        }}
-      >
+      <div style={{
+        width: 'clamp(160px, 50vw, 240px)',
+        height: '2px',
+        background: 'rgba(255,255,255,0.08)',
+        borderRadius: '2px',
+        overflow: 'hidden',
+      }}>
         <div
           ref={progressBarRef}
           style={{

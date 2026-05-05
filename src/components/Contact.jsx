@@ -148,15 +148,22 @@ export default function Contact() {
     e.preventDefault();
     setStatus('sending');
     try {
-      const formEl = formRef.current;
-      const data = new FormData(formEl);
-      await fetch('/', {
+      const res = await fetch('https://formspree.io/f/mgodyvke', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(data).toString(),
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        }),
       });
-      setStatus('success');
-      setFormData({ name: '', email: '', subject: '', message: '' });
+      if (res.ok) {
+        setStatus('success');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        setStatus('error');
+      }
     } catch {
       setStatus('error');
     }
