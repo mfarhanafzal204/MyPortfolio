@@ -358,6 +358,14 @@ html.dark .theme-toggle-thumb {
   background: #00e5ff;
 }
 
+/* ─── MOBILE SECTION PADDING ────────────────────────────── */
+@media (max-width: 640px) {
+  section {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+}
+
 /* ─── FONT HELPERS ───────────────────────────────────────── */
 .font-syne   { font-family: 'Syne', sans-serif; }
 .font-space  { font-family: 'Space Grotesk', sans-serif; }

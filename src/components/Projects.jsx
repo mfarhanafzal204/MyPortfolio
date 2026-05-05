@@ -265,7 +265,7 @@ function ProjectCard({ project, isDark }) {
           </a>
         )}
 
-        {project.videoPath && (
+        {(project.videoPath || project.youtubeId) && (
           <button
             onClick={() => setShowVideo(!showVideo)}
             style={{
@@ -347,23 +347,42 @@ function ProjectCard({ project, isDark }) {
             >
               Close ✕
             </button>
-            <video
-              controls
-              autoPlay
-              style={{
-                width: '100%',
+            {project.youtubeId ? (
+              <div style={{
+                position: 'relative',
+                paddingBottom: '56.25%',
+                height: 0,
                 borderRadius: '16px',
+                overflow: 'hidden',
                 boxShadow: '0 24px 80px rgba(0,0,0,0.6)',
-                outline: 'none',
-              }}
-              onError={(e) => {
-                console.error('Video failed to load:', project.videoPath);
-                alert('Video file not found. Please ensure the video is placed at: ' + project.videoPath);
-              }}
-            >
-              <source src={project.videoPath} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+              }}>
+                <iframe
+                  src={`https://www.youtube.com/embed/${project.youtubeId}?autoplay=1`}
+                  title={project.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  style={{
+                    position: 'absolute', top: 0, left: 0,
+                    width: '100%', height: '100%',
+                    border: 'none', borderRadius: '16px',
+                  }}
+                />
+              </div>
+            ) : (
+              <video
+                controls
+                autoPlay
+                style={{
+                  width: '100%',
+                  borderRadius: '16px',
+                  boxShadow: '0 24px 80px rgba(0,0,0,0.6)',
+                  outline: 'none',
+                }}
+              >
+                <source src={project.videoPath} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            )}
           </div>
         </div>
       )}
@@ -374,12 +393,11 @@ function ProjectCard({ project, isDark }) {
 export default function Projects() {
   const { isDark } = useTheme();
   const [filter, setFilter] = useState('all');
+  const [showAll, setShowAll] = useState(false);
 
-  // Close video modals when clicking outside
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === 'Escape') {
-        // Find all video modals and close them
         document.querySelectorAll('video').forEach(v => v.pause());
       }
     };
@@ -388,9 +406,15 @@ export default function Projects() {
   }, []);
 
   const categories = ['all', 'Full-Stack Development', 'Static Website', 'Responsive Web Design', 'Video Editing'];
-  const filteredProjects = filter === 'all'
-    ? projects
-    : projects.filter(p => p.category === filter);
+  const filtered = filter === 'all' ? projects : projects.filter(p => p.category === filter);
+
+  // On mobile show only featured (first 3) unless showAll
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 640;
+  const MOBILE_LIMIT = 3;
+  const displayedProjects = (!showAll && filtered.length > MOBILE_LIMIT)
+    ? filtered.slice(0, MOBILE_LIMIT)
+    : filtered;
+  const hasMore = filtered.length > MOBILE_LIMIT;
 
   return (
     <section
@@ -504,10 +528,60 @@ export default function Projects() {
           gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 340px), 1fr))',
           gap: 'clamp(1rem, 2vw, 1.5rem)',
         }}>
-          {filteredProjects.map(project => (
+          {displayedProjects.map(project => (
             <ProjectCard key={project.id} project={project} isDark={isDark} />
           ))}
         </div>
+
+        {/* Show More / Show Less — mobile only */}
+        {hasMore && (
+          <div className="projects-toggle" style={{ textAlign: 'center', marginTop: '1.75rem', display: 'none' }}>
+            <button
+              onClick={() => setShowAll(v => !v)}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
+                padding: '0.75rem 2rem',
+                borderRadius: '9999px',
+                background: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.04)',
+                border: isDark ? '1px solid rgba(255,255,255,0.12)' : '1px solid rgba(0,0,0,0.1)',
+                color: 'var(--text-primary)',
+                fontFamily: "'Plus Jakarta Sans', sans-serif",
+                fontWeight: 700,
+                fontSize: '0.9rem',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.background = isDark ? 'rgba(0,229,255,0.08)' : 'rgba(2,132,199,0.07)';
+                e.currentTarget.style.borderColor = 'var(--accent-cyan)';
+                e.currentTarget.style.color = 'var(--accent-cyan)';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.background = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.04)';
+                e.currentTarget.style.borderColor = isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.1)';
+                e.currentTarget.style.color = 'var(--text-primary)';
+              }}
+            >
+              {showAll ? (
+                <>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+                  Show Less
+                </>
+              ) : (
+                <>
+                  Show All {filtered.length} Projects
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                </>
+              )}
+            </button>
+          </div>
+        )}
+
+        <style>{`
+          @media (max-width: 640px) {
+            .projects-toggle { display: block !important; }
+          }
+        `}</style>
 
       </div>
     </section>

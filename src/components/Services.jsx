@@ -136,6 +136,11 @@ export default function Services() {
   const { isDark } = useTheme();
   const sectionRef = useRef();
   const cardsRef   = useRef([]);
+  const [showAll, setShowAll] = useState(false);
+
+  const MOBILE_LIMIT = 4;
+  const displayedServices = showAll ? services : services.slice(0, MOBILE_LIMIT);
+  const hasMore = services.length > MOBILE_LIMIT;
 
   useEffect(() => {
     const cards = cardsRef.current.filter(Boolean);
@@ -228,9 +233,9 @@ export default function Services() {
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 300px), 1fr))',
           gap: 'clamp(0.875rem, 1.5vw, 1.25rem)',
-          marginBottom: 'clamp(3rem, 5vw, 4.5rem)',
+          marginBottom: hasMore ? '0' : 'clamp(3rem, 5vw, 4.5rem)',
         }}>
-          {services.map((service, i) => (
+          {displayedServices.map((service, i) => (
             <ServiceCard
               key={service.title}
               service={service}
@@ -239,6 +244,54 @@ export default function Services() {
             />
           ))}
         </div>
+
+        {/* Show More / Less — mobile only */}
+        {hasMore && (
+          <div className="services-toggle" style={{ textAlign: 'center', margin: '1.5rem 0 clamp(3rem, 5vw, 4.5rem)', display: 'none' }}>
+            <button
+              onClick={() => setShowAll(v => !v)}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
+                padding: '0.75rem 2rem',
+                borderRadius: '9999px',
+                background: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.04)',
+                border: isDark ? '1px solid rgba(255,255,255,0.12)' : '1px solid rgba(0,0,0,0.1)',
+                color: 'var(--text-primary)',
+                fontFamily: "'Plus Jakarta Sans', sans-serif",
+                fontWeight: 700, fontSize: '0.9rem',
+                cursor: 'pointer', transition: 'all 0.2s ease',
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.background = isDark ? 'rgba(0,229,255,0.08)' : 'rgba(2,132,199,0.07)';
+                e.currentTarget.style.borderColor = 'var(--accent-cyan)';
+                e.currentTarget.style.color = 'var(--accent-cyan)';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.background = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.04)';
+                e.currentTarget.style.borderColor = isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.1)';
+                e.currentTarget.style.color = 'var(--text-primary)';
+              }}
+            >
+              {showAll ? (
+                <>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+                  Show Less
+                </>
+              ) : (
+                <>
+                  Show All {services.length} Services
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                </>
+              )}
+            </button>
+          </div>
+        )}
+
+        <style>{`
+          @media (max-width: 640px) {
+            .services-toggle { display: block !important; }
+          }
+        `}</style>
 
         {/* CTA */}
         <div style={{
