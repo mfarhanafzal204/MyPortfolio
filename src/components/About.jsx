@@ -163,15 +163,17 @@ export default function About() {
 
           <p style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: '1.25rem' }}>
             I'm <strong style={{ color: 'var(--text-primary)', fontWeight: 700 }}>Farhan Afzal</strong> — a Full-Stack Developer
-            based in Islamabad, specializing in building end-to-end web applications that
-            solve real business problems. From high-performance storefronts to real-time
-            ERP systems, I craft digital products that scale.
+            based in Islamabad. My work sits at the intersection of product thinking and
+            engineering: I build end-to-end web applications that solve real operational
+            problems, from high-throughput e-commerce storefronts to real-time ERP systems
+            that replace manual workflows entirely.
           </p>
           <p style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: '3rem' }}>
-            Proficient in the <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>MERN stack, Next.js 14, TypeScript, Firebase,</strong> and{' '}
-            <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>AWS</strong>, I've helped
-            real businesses move from manual workflows to digital, cloud-based ecosystems —
-            with a focus on scalable architecture, mobile-first design, and measurable impact.
+            My stack centers on <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>MERN, Next.js 14, TypeScript, Firebase,</strong> and{' '}
+            <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>AWS</strong>. What that means in practice: production-grade
+            architecture, mobile-first execution, and features that actually make it to
+            the live site without accumulating technical debt. I care about the details
+            that separate software that works from software that scales.
           </p>
 
           {/* Stats */}

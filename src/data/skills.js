@@ -14,6 +14,8 @@ const logos = {
 
   'Next.js 14': `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="4" fill="#000"/><path d="M16 5C9.925 5 5 9.925 5 16s4.925 11 11 11c3.04 0 5.79-1.23 7.78-3.22L13 13v9H11V10h2l9.5 13.1A10.96 10.96 0 0027 16c0-6.075-4.925-11-11-11z" fill="#fff"/><rect x="19" y="10" width="2" height="9" fill="#fff"/></svg>`,
 
+  'Next.js': `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="4" fill="#000"/><path d="M16 5C9.925 5 5 9.925 5 16s4.925 11 11 11c3.04 0 5.79-1.23 7.78-3.22L13 13v9H11V10h2l9.5 13.1A10.96 10.96 0 0027 16c0-6.075-4.925-11-11-11z" fill="#fff"/><rect x="19" y="10" width="2" height="9" fill="#fff"/></svg>`,
+
   'Tailwind CSS': `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="4" fill="#0F172A"/><path d="M16 8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.91.23 1.56.9 2.28 1.64C17.67 13.9 19.1 15.4 22 15.4c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.91-.23-1.56-.9-2.28-1.64C20.33 9.5 18.9 8 16 8zM10 16.6c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.91.23 1.56.9 2.28 1.64C11.67 22.5 13.1 24 16 24c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.91-.23-1.56-.9-2.28-1.64C14.33 18.1 12.9 16.6 10 16.6z" fill="#38BDF8"/></svg>`,
 
   'Node.js': `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="4" fill="#1a1a1a"/><path d="M16 4L5 10v12l11 6 11-6V10L16 4zm0 2.3l8.7 5-8.7 5-8.7-5 8.7-5zM7 12.1l8 4.6v9.2l-8-4.6v-9.2zm10 13.8v-9.2l8-4.6v9.2l-8 4.6z" fill="#539E43"/></svg>`,
@@ -59,31 +61,31 @@ export const skillCategories = [
   {
     id: 1,
     title: 'Languages',
-    icon: '{ }',
+    icon: `<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M4 7h12M4 10h8M4 13h10"/></svg>`,
     skills: ['JavaScript', 'TypeScript', 'SQL', 'HTML5', 'CSS3'],
   },
   {
     id: 2,
     title: 'Frontend',
-    icon: '◈',
+    icon: `<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="16" height="12" rx="1.5"/><path d="M7 18h6M10 15v3"/></svg>`,
     skills: ['React.js', 'Next.js 14', 'Responsive Web Design', 'PWA', 'Tailwind CSS'],
   },
   {
     id: 3,
     title: 'Backend',
-    icon: '⚙',
+    icon: `<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="14" height="4" rx="1"/><rect x="3" y="12" width="14" height="4" rx="1"/><circle cx="6.5" cy="6" r=".75" fill="currentColor"/><circle cx="6.5" cy="14" r=".75" fill="currentColor"/></svg>`,
     skills: ['Node.js', 'Express.js', 'RESTful APIs', 'System Architecture', 'MERN Stack'],
   },
   {
     id: 4,
     title: 'Databases & Cloud',
-    icon: '☁',
+    icon: `<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M4 8h12c1 2 1 5 0 7H4c-1-2-1-5 0-7z"/><path d="M4 8c0-2.2 2.7-4 6-4s6 1.8 6 4"/></svg>`,
     skills: ['PostgreSQL', 'Firebase', 'AWS', 'Vercel', 'Netlify', 'Git / GitHub'],
   },
   {
     id: 5,
     title: 'Specialties',
-    icon: '★',
+    icon: `<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M10 2l2.4 4.9 5.6.8-4 3.9.9 5.4L10 14.4 5.1 17l.9-5.4L2 7.7l5.6-.8L10 2z"/></svg>`,
     skills: [
       'Full-Stack Development',
       'Technical SEO',

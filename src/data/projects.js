@@ -11,7 +11,7 @@ export const projects = [
     liveUrl: 'https://glassgowturbohouse.com',
     githubUrl: null,
     color: '#00e5ff',
-    period: 'Jan 2026 – Present',
+    period: 'Dec 2025 – Present',
     featured: true,
   },
   {
@@ -26,7 +26,7 @@ export const projects = [
     liveUrl: 'https://kameti-app.vercel.app',
     githubUrl: null,
     color: '#8b5cf6',
-    period: '2025 – Present',
+    period: '2026 – Present',
     featured: true,
   },
   {
@@ -41,7 +41,7 @@ export const projects = [
     liveUrl: 'https://hellopetpk.pages.dev',
     githubUrl: null,
     color: '#10b981',
-    period: 'Dec 2025 – Jan 2026',
+    period: 'Dec 2025 – Present',
     featured: true,
   },
   {
@@ -120,5 +120,21 @@ export const projects = [
     color: '#f97316',
     period: '2025',
     featured: false,
+  },
+  {
+    id: '09',
+    title: 'EventTix',
+    category: 'Full-Stack Development',
+    type: 'Full-Stack PWA · Event Booking Platform',
+    description:
+      'A complete event ticketing system with separate User and Admin applications — both deployed as installable Progressive Web Apps on Vercel. Users browse events, purchase tickets with payment confirmation, and receive scannable e-tickets. Admins and a superadmin manage events, monitor orders, and scan QR tickets at the door.',
+    impact: 'Full event lifecycle: browse → book → pay → scan at door',
+    tags: ['Next.js', 'Supabase', 'PostgreSQL', 'PWA', 'Vercel'],
+    liveUrl: 'https://event-ticketing-app-user.vercel.app/',
+    adminUrl: 'https://event-ticketing-app-admin.vercel.app/login?next=%2Fdashboard',
+    githubUrl: null,
+    color: '#4f46e5',
+    period: 'July – August 2026',
+    featured: true,
   },
 ];

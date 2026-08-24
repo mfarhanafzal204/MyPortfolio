@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from '../utils/gsapConfig';
 import { useTheme } from '../context/ThemeContext';
 import { timeline } from '../data/timeline';
@@ -8,6 +8,72 @@ const typeMeta = {
   education: { label: 'Education',  color: '#6366f1',  bg: 'rgba(99,102,241,0.1)',  border: 'rgba(99,102,241,0.25)' },
   freelance: { label: 'Freelance',  color: '#f59e0b',  bg: 'rgba(245,158,11,0.1)',  border: 'rgba(245,158,11,0.25)' },
 };
+
+function OrgLogo({ item, isDark }) {
+  const [imgError, setImgError] = useState(false);
+
+  const containerStyle = {
+    flexShrink: 0,
+    width: '52px',
+    height: '52px',
+    borderRadius: '12px',
+    overflow: 'hidden',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    border: isDark ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(0,0,0,0.08)',
+    background: isDark
+      ? 'rgba(255,255,255,0.05)'
+      : 'rgba(255,255,255,0.9)',
+    transition: 'transform 0.2s ease',
+    textDecoration: 'none',
+  };
+
+  const content = !imgError && item.logoSrc ? (
+    <img
+      src={item.logoSrc}
+      alt={item.logoAlt || item.organization}
+      loading="lazy"
+      onError={() => setImgError(true)}
+      style={{
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        display: 'block',
+      }}
+    />
+  ) : (
+    <span style={{
+      fontFamily: "'Syne', sans-serif",
+      fontSize: item.logoInitials && item.logoInitials.length > 2 ? '0.6rem' : '0.85rem',
+      fontWeight: 800,
+      color: item.color,
+      letterSpacing: '-0.02em',
+      textAlign: 'center',
+      lineHeight: 1,
+    }}>
+      {item.logoInitials || item.organization.slice(0, 2).toUpperCase()}
+    </span>
+  );
+
+  if (item.orgUrl) {
+    return (
+      <a
+        href={item.orgUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={containerStyle}
+        onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.08)'}
+        onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+        aria-label={`Visit ${item.organization} website`}
+      >
+        {content}
+      </a>
+    );
+  }
+
+  return <div style={containerStyle}>{content}</div>;
+}
 
 function TimelineItem({ item, index, isDark }) {
   const cardRef = useRef();
@@ -74,39 +140,8 @@ function TimelineItem({ item, index, isDark }) {
         display: 'flex', alignItems: 'flex-start', gap: '1rem',
         marginBottom: '1.1rem',
       }}>
-        {/* Logo */}
-        {item.orgUrl ? (
-          <a
-            href={item.orgUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              flexShrink: 0,
-              width: '48px', height: '48px',
-              borderRadius: '12px',
-              overflow: 'hidden',
-              display: 'flex',
-              textDecoration: 'none',
-              border: isDark ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(0,0,0,0.08)',
-              transition: 'transform 0.2s ease',
-            }}
-            onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.08)'}
-            onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
-            dangerouslySetInnerHTML={{ __html: item.logo }}
-          />
-        ) : (
-          <div
-            style={{
-              flexShrink: 0,
-              width: '48px', height: '48px',
-              borderRadius: '12px',
-              overflow: 'hidden',
-              display: 'flex',
-              border: isDark ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(0,0,0,0.08)',
-            }}
-            dangerouslySetInnerHTML={{ __html: item.logo }}
-          />
-        )}
+        {/* Real logo image */}
+        <OrgLogo item={item} isDark={isDark} />
 
         {/* Org + period */}
         <div style={{ flex: 1, minWidth: 0 }}>
@@ -199,6 +234,87 @@ function TimelineItem({ item, index, isDark }) {
           {item.location}
         </span>
       </div>
+
+      {/* App URL (e.g. Play Store link) */}
+      {item.appUrl && (
+        <div style={{ marginBottom: '0.6rem' }}>
+          <a
+            href={item.appUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: '0.35rem',
+              padding: '0.22rem 0.65rem',
+              borderRadius: '6px',
+              background: `${item.color}12`,
+              border: `1px solid ${item.color}30`,
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: 'clamp(0.62rem, 0.9vw, 0.68rem)',
+              fontWeight: 600,
+              color: item.color,
+              textDecoration: 'none',
+              letterSpacing: '0.02em',
+              transition: 'all 0.2s ease',
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.background = `${item.color}22`;
+              e.currentTarget.style.textDecoration = 'underline';
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.background = `${item.color}12`;
+              e.currentTarget.style.textDecoration = 'none';
+            }}
+          >
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M3 18.5l8.5-8.5L3 1.5 4.5 0l10 10-10 10L3 18.5zm8 0L19.5 10 11 1.5 12.5 0l10 10-10 10L11 18.5z"/>
+            </svg>
+            Google Play
+          </a>
+        </div>
+      )}
+
+      {/* Offer Letter button — only for Brouni entry */}
+      {item.offerLetterUrl && (
+        <div style={{ marginBottom: '0.75rem' }}>
+          <a
+            href={item.offerLetterUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
+              padding: '0.35rem 0.85rem',
+              borderRadius: '8px',
+              background: `${item.color}12`,
+              border: `1px solid ${item.color}35`,
+              fontFamily: "'Plus Jakarta Sans', sans-serif",
+              fontSize: 'clamp(0.72rem, 1vw, 0.78rem)',
+              fontWeight: 600,
+              color: item.color,
+              textDecoration: 'none',
+              letterSpacing: '0.01em',
+              transition: 'all 0.2s ease',
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.background = `${item.color}22`;
+              e.currentTarget.style.transform = 'translateY(-1px)';
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.background = `${item.color}12`;
+              e.currentTarget.style.transform = 'translateY(0)';
+            }}
+            aria-label="View Brouni internship offer letter"
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+              <polyline points="10 9 9 9 8 9"/>
+            </svg>
+            View Offer Letter
+          </a>
+        </div>
+      )}
 
       {/* Description */}
       <p style={{

@@ -7,7 +7,6 @@ import './styles/animations.css';
 
 import Preloader from './components/Preloader';
 import Navbar from './components/Navbar';
-import CustomCursor from './components/CustomCursor';
 import NoiseOverlay from './components/NoiseOverlay';
 import Hero from './components/Hero';
 import InstallBanner from './components/InstallBanner';
@@ -69,7 +68,6 @@ function AppInner() {
 
   return (
     <>
-      <CustomCursor />
       <NoiseOverlay />
       <InstallBanner />
       {!preloaderDone && <Preloader onComplete={handlePreloaderDone} />}

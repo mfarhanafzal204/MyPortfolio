@@ -12,7 +12,6 @@ export default function Hero() {
   const taglineRef         = useRef();
   const subtitleRef        = useRef();
   const locationRef        = useRef();
-  const statusRef          = useRef();
   const btnsRef            = useRef([]);
   const scrollIndicatorRef = useRef();
   const photoRef           = useRef();
@@ -20,7 +19,7 @@ export default function Hero() {
   useEffect(() => {
     const textEls = [
       labelRef.current, nameRef.current, taglineRef.current,
-      subtitleRef.current, locationRef.current, statusRef.current,
+      subtitleRef.current, locationRef.current,
       scrollIndicatorRef.current, ...btnsRef.current.filter(Boolean),
     ].filter(Boolean);
 
@@ -49,8 +48,8 @@ export default function Hero() {
       { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' },
       '-=0.25'
     )
-    .fromTo([locationRef.current, statusRef.current],
-      { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.08 },
+    .fromTo(locationRef.current,
+      { opacity: 0 }, { opacity: 1, duration: 0.4 },
       '-=0.2'
     )
     .fromTo(btnsRef.current.filter(Boolean),
@@ -248,10 +247,10 @@ export default function Hero() {
             margin: '0 auto 1.25rem',
             opacity: 0,
           }}>
-            Building digital products that{' '}
-            <span style={{ color: 'var(--text-primary)', fontWeight: 700 }}>perform, scale,</span>
-            {' '}and{' '}
-            <span style={{ color: 'var(--text-primary)', fontWeight: 700 }}>leave an impression.</span>
+            I build things that{' '}
+            <span style={{ color: 'var(--text-primary)', fontWeight: 700 }}>actually ship</span>
+            {' '}— clean architecture, real business logic, and code that holds up{' '}
+            <span style={{ color: 'var(--text-primary)', fontWeight: 700 }}>at scale.</span>
           </p>
 
           {/* Tech stack */}
@@ -292,30 +291,7 @@ export default function Hero() {
               Islamabad, Pakistan
             </span>
 
-            {/* Available pill */}
-            <span ref={statusRef} style={{
-              display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
-              padding: '0.35rem 1rem', borderRadius: '9999px',
-              background: 'rgba(16,185,129,0.08)',
-              border: '1px solid rgba(16,185,129,0.22)',
-              opacity: 0,
-            }}>
-              <span style={{
-                width: '7px', height: '7px', borderRadius: '50%',
-                background: '#10b981',
-                boxShadow: '0 0 0 0 rgba(16,185,129,0.4)',
-                display: 'inline-block', flexShrink: 0,
-                animation: 'ping 1.8s ease-out infinite',
-              }} />
-              <span style={{
-                fontFamily: "'Plus Jakarta Sans', sans-serif",
-                fontSize: 'clamp(0.78rem, 1.4vw, 0.85rem)',
-                color: '#10b981',
-                fontWeight: 600, letterSpacing: '0.01em',
-              }}>
-                Open to opportunities
-              </span>
-            </span>
+            {/* No status badge — location only */}
           </div>
 
           {/* CTA buttons */}

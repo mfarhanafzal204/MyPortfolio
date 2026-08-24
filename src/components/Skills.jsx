@@ -53,11 +53,89 @@ function SkillPill({ skill, isDark }) {
   );
 }
 
+const coreProficiencyLogos = topSkills.map((s) => ({
+  name: s.name,
+  svg: logos[s.name] || logos[s.name + '.js'],
+}));
+
+function LogoMarquee() {
+  const items = [...coreProficiencyLogos, ...coreProficiencyLogos];
+
+  return (
+    <div
+      className="core-logo-marquee"
+      style={{
+        marginTop: 'clamp(1.25rem, 2.5vw, 1.75rem)',
+        paddingTop: 'clamp(1rem, 2vw, 1.25rem)',
+        borderTop: '1px solid rgba(128,128,128,0.12)',
+        overflow: 'hidden',
+        position: 'relative',
+        maskImage: 'linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)',
+        WebkitMaskImage: 'linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)',
+      }}
+    >
+      <div className="core-logo-marquee-track" aria-hidden="true">
+        {items.map((item, i) => (
+          <div
+            key={`${item.name}-${i}`}
+            className="core-logo-marquee-item"
+            title={item.name}
+          >
+            <span
+              style={{ width: '36px', height: '36px', display: 'flex', flexShrink: 0 }}
+              dangerouslySetInnerHTML={{ __html: item.svg }}
+            />
+            <span style={{
+              fontFamily: "'Plus Jakarta Sans', sans-serif",
+              fontSize: '0.78rem',
+              fontWeight: 600,
+              color: 'var(--text-muted)',
+              letterSpacing: '0.02em',
+              whiteSpace: 'nowrap',
+            }}>
+              {item.name}
+            </span>
+          </div>
+        ))}
+      </div>
+      <style>{`
+        .core-logo-marquee-track {
+          display: flex;
+          align-items: center;
+          gap: clamp(2rem, 4vw, 3.5rem);
+          width: max-content;
+          animation: coreLogoMarquee 28s linear infinite;
+        }
+        .core-logo-marquee:hover .core-logo-marquee-track {
+          animation-play-state: paused;
+        }
+        .core-logo-marquee-item {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.65rem;
+          flex-shrink: 0;
+          opacity: 0.88;
+          transition: opacity 0.25s ease;
+        }
+        .core-logo-marquee:hover .core-logo-marquee-item {
+          opacity: 1;
+        }
+        @keyframes coreLogoMarquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .core-logo-marquee-track { animation: none; flex-wrap: wrap; width: 100%; justify-content: center; }
+        }
+      `}</style>
+    </div>
+  );
+}
+
 function ProgressBar({ name, level, isDark, index }) {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.3 });
   const barRef  = useRef();
   const numRef  = useRef();
-  const logo    = logos[name] || logos[name + '.js'];
 
   // Circle params
   const size   = 88;
@@ -140,19 +218,15 @@ function ProgressBar({ name, level, isDark, index }) {
             </linearGradient>
           </defs>
         </svg>
-        {/* Center: logo or percentage */}
+        {/* Center: percentage */}
         <div style={{
           position: 'absolute', inset: 0,
           display: 'flex', flexDirection: 'column',
           alignItems: 'center', justifyContent: 'center', gap: '2px',
         }}>
-          {logo
-            ? <span style={{ width: '26px', height: '26px', display: 'flex' }} dangerouslySetInnerHTML={{ __html: logo }} />
-            : null
-          }
           <span ref={numRef} style={{
             fontFamily: "'JetBrains Mono', monospace",
-            fontSize: logo ? '0.62rem' : '0.9rem',
+            fontSize: '0.9rem',
             fontWeight: 700,
             background: 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))',
             WebkitBackgroundClip: 'text',
@@ -323,7 +397,10 @@ export default function Skills() {
                 paddingBottom: '0.85rem',
                 borderBottom: isDark ? '1px solid rgba(255,255,255,0.07)' : '1px solid rgba(0,0,0,0.07)',
               }}>
-                <span style={{ fontSize: '1.1rem', lineHeight: 1 }}>{cat.icon}</span>
+                <span
+                  style={{ width: '18px', height: '18px', display: 'flex', color: 'var(--accent-cyan)', flexShrink: 0 }}
+                  dangerouslySetInnerHTML={{ __html: cat.icon }}
+                />
                 <span style={{
                   fontFamily: "'Syne', sans-serif",
                   fontWeight: 700,
@@ -386,6 +463,8 @@ export default function Skills() {
               <ProgressBar key={s.name} name={s.name} level={s.level} isDark={isDark} index={i} />
             ))}
           </div>
+
+          <LogoMarquee />
         </div>
 
       </div>

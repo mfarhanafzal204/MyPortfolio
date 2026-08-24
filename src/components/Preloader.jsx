@@ -58,28 +58,15 @@ export default function Preloader({ onComplete }) {
         <div style={{
           fontFamily: "'Syne', sans-serif",
           fontWeight: 800,
-          fontSize: 'clamp(2rem, 10vw, 5rem)',
+          /* smaller max on mobile, allow wrapping */
+          fontSize: 'clamp(1.25rem, 8vw, 3rem)',
           color: 'var(--text-primary)',
-          letterSpacing: '0.08em',
-          lineHeight: 1.1,
-          whiteSpace: 'nowrap',
+          letterSpacing: '0.06em',
+          lineHeight: 1.05,
+          whiteSpace: 'normal',
+          overflowWrap: 'break-word',
         }}>
-          FARHAN
-        </div>
-        <div style={{
-          fontFamily: "'Syne', sans-serif",
-          fontWeight: 800,
-          fontSize: 'clamp(2rem, 10vw, 5rem)',
-          color: 'var(--text-primary)',
-          letterSpacing: '0.08em',
-          lineHeight: 1.1,
-          whiteSpace: 'nowrap',
-          background: 'linear-gradient(135deg, #00e5ff, #8b5cf6)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          backgroundClip: 'text',
-        }}>
-          AFZAL
+          FARHAN AFZAL
         </div>
       </div>
 

@@ -128,7 +128,7 @@ export default function Contact() {
   const rightRef   = useRef();
   const formRef    = useRef();
 
-  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', company: '', subject: '', projectType: '', message: '' });
   const [status, setStatus]     = useState('idle');
 
   useEffect(() => {
@@ -154,13 +154,15 @@ export default function Contact() {
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
+          company: formData.company,
           subject: formData.subject,
+          projectType: formData.projectType,
           message: formData.message,
         }),
       });
       if (res.ok) {
         setStatus('success');
-        setFormData({ name: '', email: '', subject: '', message: '' });
+        setFormData({ name: '', email: '', company: '', subject: '', projectType: '', message: '' });
       } else {
         setStatus('error');
       }
@@ -202,7 +204,7 @@ export default function Contact() {
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.6rem', marginBottom: '1rem' }}>
             <span style={{ width: '28px', height: '2px', borderRadius: '2px', flexShrink: 0, background: 'linear-gradient(90deg, var(--accent-cyan), var(--accent-purple))' }} />
             <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 'clamp(0.72rem, 1.2vw, 0.82rem)', fontWeight: 600, color: 'var(--accent-cyan)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
-              Get In Touch
+              Contact
             </span>
             <span style={{ width: '28px', height: '2px', borderRadius: '2px', flexShrink: 0, background: 'linear-gradient(90deg, var(--accent-purple), var(--accent-cyan))' }} />
           </div>
@@ -211,9 +213,9 @@ export default function Contact() {
             fontSize: 'clamp(2rem, 4.5vw, 3.2rem)', color: 'var(--text-primary)',
             lineHeight: 1.15, letterSpacing: '-0.02em',
           }}>
-            Let's Build Something{' '}
+            Start a{' '}
             <span style={{ background: 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-              Great
+              Conversation
             </span>
           </h2>
         </div>
@@ -235,9 +237,9 @@ export default function Contact() {
               lineHeight: 1.8,
               marginBottom: '2.5rem',
             }}>
-              Got a project that needs a sharp developer? Let's talk. I bring ideas to life
-              with clean code, scalable architecture, and a focus on real business impact —
-              from concept to deployment.
+              Whether you have a defined brief or a rough idea that needs shaping — reach out.
+              I work with startups, established businesses, and independent operators to
+              build web products that are engineered properly and delivered on time.
             </p>
 
             {/* Contact info cards */}
@@ -312,22 +314,16 @@ export default function Contact() {
               ))}
             </div>
 
-            {/* Availability badge */}
-            <div style={{
-              display: 'inline-flex', alignItems: 'center', gap: '0.6rem',
-              padding: '0.55rem 1.1rem', borderRadius: '9999px',
-              background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.25)',
+            {/* Closing line */}
+            <p style={{
+              fontFamily: "'Plus Jakarta Sans', sans-serif",
+              fontSize: 'clamp(0.82rem, 1.2vw, 0.88rem)',
+              color: 'var(--text-muted)',
+              lineHeight: 1.7,
+              fontStyle: 'italic',
             }}>
-              <span style={{
-                width: '8px', height: '8px', borderRadius: '50%',
-                background: '#10b981', boxShadow: '0 0 0 0 rgba(16,185,129,0.4)',
-                display: 'inline-block', flexShrink: 0,
-                animation: 'contactPing 1.8s ease-out infinite',
-              }} />
-              <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 'clamp(0.78rem, 1.2vw, 0.85rem)', color: '#10b981', fontWeight: 600 }}>
-                Open to Work &amp; Collaboration
-              </span>
-            </div>
+              Have something in mind? Send a message — I read every note personally and get back within 24 hours.
+            </p>
           </div>
 
           {/* Right — Form */}
@@ -375,7 +371,56 @@ export default function Contact() {
                   <InputField label="Email" type="email" name="email" placeholder="your@email.com" value={formData.email} onChange={handleChange} isDark={isDark} />
                 </div>
 
-                <InputField label="Subject" name="subject" placeholder="Project / Internship / Freelance" value={formData.subject} onChange={handleChange} isDark={isDark} />
+                <InputField label="Company / Organization (optional)" name="company" placeholder="Your company or org" value={formData.company} onChange={handleChange} isDark={isDark} />
+
+                {/* Project Type dropdown */}
+                <div style={{ position: 'relative', marginBottom: '1.1rem' }}>
+                  <label style={{
+                    display: 'block',
+                    fontFamily: "'JetBrains Mono', monospace",
+                    fontSize: '0.72rem',
+                    color: formData.projectType ? 'var(--accent-cyan)' : 'var(--text-muted)',
+                    letterSpacing: '0.06em',
+                    textTransform: 'uppercase',
+                    marginBottom: '0.4rem',
+                    fontWeight: 600,
+                  }}>
+                    Project Type / Budget Range (optional)
+                  </label>
+                  <select
+                    name="projectType"
+                    value={formData.projectType}
+                    onChange={handleChange}
+                    style={{
+                      width: '100%',
+                      padding: '0.85rem 1rem',
+                      background: isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)',
+                      border: `1.5px solid ${isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'}`,
+                      borderRadius: '12px',
+                      color: formData.projectType ? 'var(--text-primary)' : 'var(--text-muted)',
+                      fontFamily: "'Plus Jakarta Sans', sans-serif",
+                      fontSize: 'clamp(0.88rem, 1.3vw, 0.95rem)',
+                      outline: 'none',
+                      cursor: 'pointer',
+                      appearance: 'none',
+                      WebkitAppearance: 'none',
+                    }}
+                  >
+                    <option value="">Select an option...</option>
+                    <option value="web-app">Custom Web Application</option>
+                    <option value="ecommerce">E-Commerce / Store</option>
+                    <option value="business-site">Business / Brand Website</option>
+                    <option value="erp-pos">ERP / POS System</option>
+                    <option value="seo">Technical SEO</option>
+                    <option value="design-video">Design / Video Editing</option>
+                    <option value="budget-under-500">Budget: Under $500</option>
+                    <option value="budget-500-2000">Budget: $500 – $2,000</option>
+                    <option value="budget-2000-plus">Budget: $2,000+</option>
+                    <option value="other">Other / Not Sure Yet</option>
+                  </select>
+                </div>
+
+                <InputField label="Subject" name="subject" placeholder="Project brief summary" value={formData.subject} onChange={handleChange} isDark={isDark} />
                 <InputField label="Message" name="message" placeholder="Tell me about your project..." isTextarea value={formData.message} onChange={handleChange} isDark={isDark} />
 
                 {/* Submit */}

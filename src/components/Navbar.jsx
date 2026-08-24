@@ -181,8 +181,8 @@ export default function Navbar() {
 
           {/* Download CV button */}
           <a
-            href="/FarhanAfzal_BSCS_2027.pdf"
-            download="FarhanAfzal_BSCS_2027.pdf"
+            href="/Farhan_Afzal_Full_Stack_Developer.pdf"
+            download="Farhan_Afzal_Full_Stack_Developer.pdf"
             style={{
               display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
               fontFamily: "'Syne', sans-serif",
@@ -375,8 +375,8 @@ export default function Navbar() {
           {/* Download CV */}
           <a
             ref={el => (menuLinksRef.current[navLinks.length] = el)}
-            href="/FarhanAfzal_BSCS_2027.pdf"
-            download="FarhanAfzal_BSCS_2027.pdf"
+            href="/Farhan_Afzal_Full_Stack_Developer.pdf"
+            download="Farhan_Afzal_Full_Stack_Developer.pdf"
             style={{
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
               padding: '0.85rem',

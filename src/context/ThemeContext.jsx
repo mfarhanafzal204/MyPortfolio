@@ -6,7 +6,9 @@ export function ThemeProvider({ children }) {
   // Read saved preference, default to light
   const [isDark, setIsDark] = useState(() => {
     try {
-      return localStorage.getItem('theme') === 'dark';
+      const saved = localStorage.getItem('theme');
+      if (saved !== null) return saved === 'dark';
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
     } catch {
       return false;
     }

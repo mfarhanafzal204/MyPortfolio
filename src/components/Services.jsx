@@ -64,13 +64,15 @@ function ServiceCard({ service, isDark, cardRef }) {
         background: `${service.color}14`,
         border: `1px solid ${service.color}28`,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        fontSize: '1.5rem',
         marginBottom: '1.1rem',
         flexShrink: 0,
         boxShadow: hovered ? `0 0 20px ${service.color}25` : 'none',
         transition: 'box-shadow 0.3s ease',
       }}>
-        {service.icon}
+        <span
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          dangerouslySetInnerHTML={{ __html: typeof service.icon === 'function' ? service.icon(service.color) : service.icon }}
+        />
       </div>
 
       {/* Title */}
@@ -305,7 +307,7 @@ export default function Services() {
             textTransform: 'uppercase',
             marginBottom: '0.75rem',
           }}>
-            Ready to work together?
+            Start a project
           </div>
 
           <h3 style={{
@@ -317,14 +319,14 @@ export default function Services() {
             marginBottom: '0.75rem',
             lineHeight: 1.2,
           }}>
-            Let's Build Something{' '}
+            Let's Turn Your{' '}
             <span style={{
               background: 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
             }}>
-              Great
+              Idea Into a Product
             </span>
           </h3>
 
@@ -337,7 +339,7 @@ export default function Services() {
             margin: '0 auto 2rem',
             lineHeight: 1.7,
           }}>
-            Have a project in mind? I'm available for freelance work on Fiverr.
+            Describe what you need and I'll get it built, tested, and shipped — on Fiverr.
           </p>
 
           <a
