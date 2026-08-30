@@ -22,8 +22,8 @@ export const timeline = [
     organization: 'Brouni',
     orgUrl: 'https://web.brouniapp.com/',
     appUrl: 'https://play.google.com/store/apps/details?id=com.brouniapp.brouni&hl=en',
-    offerLetterUrl: '/logos/Muhammad%20Farhan%20Afzal%20Internship%20Offer%20Letter_page-0001.jpg',
-    certificateUrl: '/Internship-Certificate-Muhammad-Farhan-Afzal.pdf',
+    offerLetterUrl: '/logos/offer-letter-brouni.jpg',
+    certificateUrl: '/certificate-brouni.jpg',
     location: 'Remote',
     description:
       'Worked on the live Brouni web application — implementing scroll animations and UI transitions, building responsive page layouts, integrating new frontend features, and running Lighthouse audits to optimize performance across mobile and desktop.',
