@@ -75,7 +75,7 @@ function OrgLogo({ item, isDark }) {
   return <div style={containerStyle}>{content}</div>;
 }
 
-function TimelineItem({ item, index, isDark }) {
+function TimelineItem({ item, index, isDark, onImageClick }) {
   const cardRef = useRef();
   const isLeft  = index % 2 === 0;
   const meta    = typeMeta[item.type] || typeMeta.work;
@@ -277,10 +277,8 @@ function TimelineItem({ item, index, isDark }) {
       {(item.offerLetterUrl || item.certificateUrl) && (
         <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
           {item.offerLetterUrl && (
-            <a
-              href={item.offerLetterUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => onImageClick(item.offerLetterUrl)}
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
                 padding: '0.35rem 0.85rem',
@@ -291,6 +289,7 @@ function TimelineItem({ item, index, isDark }) {
                 fontSize: 'clamp(0.72rem, 1vw, 0.78rem)',
                 fontWeight: 600,
                 color: item.color,
+                cursor: 'pointer',
                 textDecoration: 'none',
                 letterSpacing: '0.01em',
                 transition: 'all 0.2s ease',
@@ -313,14 +312,12 @@ function TimelineItem({ item, index, isDark }) {
                 <polyline points="10 9 9 9 8 9"/>
               </svg>
               View Offer Letter
-            </a>
+            </button>
           )}
 
           {item.certificateUrl && (
-            <a
-              href={item.certificateUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => onImageClick(item.certificateUrl)}
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
                 padding: '0.35rem 0.85rem',
@@ -331,6 +328,7 @@ function TimelineItem({ item, index, isDark }) {
                 fontSize: 'clamp(0.72rem, 1vw, 0.78rem)',
                 fontWeight: 600,
                 color: item.color,
+                cursor: 'pointer',
                 textDecoration: 'none',
                 letterSpacing: '0.01em',
                 transition: 'all 0.2s ease',
@@ -350,7 +348,7 @@ function TimelineItem({ item, index, isDark }) {
                 <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
               </svg>
               Completion Certificate
-            </a>
+            </button>
           )}
         </div>
       )}
@@ -405,6 +403,18 @@ export default function Timeline() {
   const { isDark } = useTheme();
   const sectionRef = useRef();
   const lineRef    = useRef();
+  const [modalImage, setModalImage] = useState(null);
+
+  useEffect(() => {
+    if (modalImage) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [modalImage]);
 
   useEffect(() => {
     const line = lineRef.current;
@@ -508,11 +518,58 @@ export default function Timeline() {
                 boxShadow: `0 0 0 4px ${isDark ? 'var(--bg-secondary)' : 'var(--bg-secondary)'}, 0 0 12px ${item.color}80`,
                 zIndex: 2,
               }} />
-              <TimelineItem item={item} index={i} isDark={isDark} />
+              <TimelineItem item={item} index={i} isDark={isDark} onImageClick={setModalImage} />
             </div>
           ))}
         </div>
       </div>
+
+      {/* Modal */}
+      {modalImage && (
+        <div style={{
+          position: 'fixed',
+          top: 0, left: 0, right: 0, bottom: 0,
+          backgroundColor: 'rgba(0,0,0,0.85)',
+          zIndex: 999999,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '2rem',
+          backdropFilter: 'blur(5px)',
+          cursor: 'pointer',
+        }} onClick={() => setModalImage(null)}>
+          <div style={{ position: 'relative', maxWidth: '100%', maxHeight: '100%' }} onClick={e => e.stopPropagation()}>
+            <img 
+              src={modalImage} 
+              alt="Document" 
+              style={{
+                maxWidth: '100%',
+                maxHeight: '85vh',
+                objectFit: 'contain',
+                borderRadius: '8px',
+                boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
+              }}
+            />
+            <button 
+              onClick={() => setModalImage(null)}
+              style={{
+                position: 'absolute',
+                top: '-40px',
+                right: '0',
+                background: 'none',
+                border: 'none',
+                color: 'white',
+                fontSize: '2rem',
+                cursor: 'pointer',
+                padding: '0.5rem',
+                lineHeight: 1
+              }}
+            >
+              &times;
+            </button>
+          </div>
+        </div>
+      )}
 
       <style>{`
         /* Mobile: stack all cards left */
