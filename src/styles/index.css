@@ -337,3 +337,16 @@ html.dark .theme-toggle-thumb {
 .font-space  { font-family: 'Space Grotesk', sans-serif; }
 .font-jakarta{ font-family: 'Plus Jakarta Sans', sans-serif; }
 .font-mono   { font-family: 'JetBrains Mono', monospace; }
+
+/* Dengue-Guard: narrow mobile layout safeguards */
+@media (max-width: 480px) {
+  #dengue-guard { padding-inline: 1rem !important; }
+  #dengue-guard .dg-wrap, #dengue-guard .dg-hero > *, #dengue-guard aside { min-width: 0; max-width: 100%; }
+  #dengue-guard .dg-label { overflow-wrap: anywhere; line-height: 1.6; }
+  #dengue-guard .dg-status { max-width: 100%; font-size: .58rem; letter-spacing: .03em; white-space: normal; }
+  #dengue-guard .dg-hero h2 { font-size: clamp(2rem, 10vw, 2.7rem); overflow-wrap: anywhere; }
+  #dengue-guard .dg-hero aside, #dengue-guard .dg-grid article { padding: 1.25rem; }
+  #dengue-guard .dg-tags { gap: .4rem; }
+  #dengue-guard .dg-tags span { padding: .32rem .55rem; font-size: .65rem; }
+  #dengue-guard .dg-hero aside p, #dengue-guard .dg-footer p { overflow-wrap: anywhere; }
+}
